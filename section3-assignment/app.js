@@ -16,7 +16,7 @@ const server = http.createServer((req, res) => {
   const url = req.url;
   const method = req.method;
   res.setHeader("Content-Type", "text/html");
-  if (url === "/form") {
+  if (url === "/") {
     res.write(form);
     return res.end();
   }
@@ -27,12 +27,13 @@ const server = http.createServer((req, res) => {
   if (url === "/create-user" && method === "POST") {
     const body = [];
     req.on("data", (chunk) => {
-      console.log(chunk);
       body.push(chunk);
     });
     return req.on("end", () => {
       const parsed = Buffer.concat(body).toString();
-      console.log(parsed);
+      const username = parsed.split("=")[1];
+      console.log(username);
+      res.write(`<h2>Hello, ${username}</h2>`);
       return res.end();
     });
   }
