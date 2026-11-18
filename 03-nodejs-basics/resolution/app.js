@@ -45,7 +45,13 @@ const server = http.createServer((req, res) => {
     req.on("data", (chunk) => {
       body.push(chunk);
     });
-    req.on("end");
+    req.on("end", () => {
+      const parsed = Buffer.concat(body).toString();
+      console.log(parsed.split("=")[1]);
+    });
+    res.statusCode = 302;
+    res.setHeader("Location", "/");
+    res.end();
   }
 });
 
