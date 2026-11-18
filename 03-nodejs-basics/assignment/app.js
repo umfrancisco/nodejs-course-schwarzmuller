@@ -15,30 +15,31 @@ console.log("Listening at port 3000");
 const server = http.createServer((req, res) => {
   const url = req.url;
   const method = req.method;
-  res.setHeader("Content-Type", "text/html");
   if (url === "/") {
+    res.setHeader("Content-Type", "text/html");
     res.write(form);
     return res.end();
   }
   if (url === "/users") {
+    res.setHeader("Content-Type", "text/html");
     res.write("<ul><li>user 1</li></ul>");
     return res.end();
   }
   if (url === "/create-user" && method === "POST") {
+    res.setHeader("Content-Type", "text/html");
     const body = [];
     req.on("data", (chunk) => {
       body.push(chunk);
     });
-    return req.on("end", () => {
+    req.on("end", () => {
       const parsed = Buffer.concat(body).toString();
       const username = parsed.split("=")[1];
       console.log(username);
-      res.write(`<h2>Hello, ${username}</h2>`);
-      return res.end();
     });
+    res.statusCode = 302;
+    res.setHeader("Location", "/");
+    res.end();
   }
-  res.write("hello world");
-  res.end();
 });
 
 server.listen(3000);
