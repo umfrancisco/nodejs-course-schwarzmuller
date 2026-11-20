@@ -1,11 +1,10 @@
 const express = require("express");
-const getHtml = require("../utils");
+const path = require("path");
 
 const router = express.Router();
 
 router.get("/add-product", (req, res, next) => {
-  const html = getHtml("form.html");
-  res.send(html.content);
+  res.sendFile(path.join(__dirname, "../", "views", "add-product.html"));
 });
 
 router.post("/add-product", (req, res, next) => {
