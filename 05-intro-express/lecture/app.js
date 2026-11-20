@@ -1,19 +1,10 @@
-const fs = require("fs");
 const express = require("express");
+const bodyParser = require("body-parser");
+const getHtml = require("./utils");
 
 const app = express();
 
-const getHtml = (file) => {
-  const path = `./pages/${file}.html`;
-  const html = { content: "" };
-  try {
-    html.content = fs.readFileSync(path, "utf-8");
-  } catch (err) {
-    console.log("file not found: "+err);
-    html.content = "page not found :/";
-  }
-  return html;
-}
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use("/add-product", (req, res, next) => {
   const html = getHtml("form");
