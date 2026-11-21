@@ -4,8 +4,6 @@ const bodyParser = require("body-parser");
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 
-// module.exports = path.dirname(process.mainModule.filename);
-// module.exports = path.dirname(require.main.filename);
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
